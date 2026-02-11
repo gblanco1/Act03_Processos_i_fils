@@ -114,8 +114,18 @@ public class main {
             System.out.println("\nMatriz 2:");
             matriz2.mostrar();
             
+            // Multiplicar matrices
+            System.out.println("\nCalculando multiplicacion...");
+            Matriz resultado = MultiplicadorMatrices.multiplicar(matriz1, matriz2);
+            
+            System.out.println("Resultado:");
+            resultado.mostrar();
+            
         } catch (NumberFormatException e) {
             System.out.println("Error: los parametros deben ser numeros enteros");
+        } catch (InterruptedException e) {
+            System.out.println("Error: se interrumpio el calculo de los hilos");
         }
     }
 }
+
