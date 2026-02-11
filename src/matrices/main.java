@@ -60,7 +60,47 @@ public class main {
                 
             } else if (opcion == 2) {
             
-            	
+            	// Leer del archivo
+                ArrayList<Integer> numeros = new ArrayList<Integer>();
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader("numeros"));
+                    String linea;
+                    while ((linea = br.readLine()) != null) {
+                        String[] valores = linea.split(" ");
+                        for (String valor : valores) {
+                            if (!valor.isEmpty()) {
+                                numeros.add(Integer.parseInt(valor));
+                            }
+                        }
+                    }
+                    br.close();
+                } catch (IOException e) {
+                    System.out.println("Error: no se pudo leer el archivo");
+                    return;
+                }
+                
+                // Validar que hay suficientes numeros
+                int totalNecesario = (ancho1 * altura1) + (ancho2 * altura2);
+                if (numeros.size() < totalNecesario) {
+                    System.out.println("Error: no hay suficientes valores en el archivo de numeros");
+                    return;
+                }
+                
+                // Llenar matrices desde archivo
+                int indice = 0;
+                for (int i = 0; i < altura1; i++) {
+                    for (int j = 0; j < ancho1; j++) {
+                        matriz1.establecer(i, j, numeros.get(indice));
+                        indice++;
+                    }
+                }
+                
+                for (int i = 0; i < altura2; i++) {
+                    for (int j = 0; j < ancho2; j++) {
+                        matriz2.establecer(i, j, numeros.get(indice));
+                        indice++;
+                    }
+                }
             }
             
             else {
