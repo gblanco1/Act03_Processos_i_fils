@@ -120,6 +120,22 @@ public class main {
             
             System.out.println("Resultado:");
             resultado.mostrar();
+
+            // Opcion simple para guardar resultado
+            System.out.println();
+            System.out.println("Deseas guardar el resultado en un archivo? (1=si 2=no)");
+            int guardar = scanner.nextInt();
+            scanner.nextLine();
+            if (guardar == 1) {
+                System.out.print("Nombre de archivo a crear: ");
+                String nombre = scanner.nextLine();
+                try {
+                    GuardadorArchivo.guardar(resultado, nombre);
+                    System.out.println("Resultado guardado en: " + nombre);
+                } catch (IOException e) {
+                    System.out.println("Error: no se pudo guardar el archivo");
+                }
+            }
             
         } catch (NumberFormatException e) {
             System.out.println("Error: los parametros deben ser numeros enteros");
