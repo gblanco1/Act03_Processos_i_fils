@@ -18,7 +18,7 @@ public class HiloCalculoElemento extends Thread {
     public void run() {
         int suma = 0;
         
-        // Multiplicacion: resultado[fila][columna] = suma de (matriz1[fila][k] * matriz2[k][columna])
+       
         for (int k = 0; k < matriz1.getAncho(); k++) {
             suma += matriz1.obtener(fila, k) * matriz2.obtener(k, columna);
         }

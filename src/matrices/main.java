@@ -28,113 +28,121 @@ public class main {
             
             System.out.println("Parametros validos");
             
-            // Crear las matrices
+            // Crear las matrices (se mantienen entre iteraciones)
             Matriz matriz1 = new Matriz(ancho1, altura1);
             Matriz matriz2 = new Matriz(ancho2, altura2);
-            
-            // Menu para elegir como introducir los valores
+
             Scanner scanner = new Scanner(System.in);
-            System.out.println();
-            System.out.println("Como deseas introducir los valores?");
-            System.out.println("1. Por consola");
-            System.out.println("2. Por archivo");
-            System.out.print("Opcion: ");
-            int opcion = scanner.nextInt();
-            
-            if (opcion == 1) {
-                System.out.println("\n--- Matriz 1 ---");
-                for (int i = 0; i < altura1; i++) {
-                    for (int j = 0; j < ancho1; j++) {
-                        System.out.print("[" + i + "][" + j + "]: ");
-                        matriz1.establecer(i, j, scanner.nextInt());
-                    }
-                }
-                
-                System.out.println("\n--- Matriz 2 ---");
-                for (int i = 0; i < altura2; i++) {
-                    for (int j = 0; j < ancho2; j++) {
-                        System.out.print("[" + i + "][" + j + "]: ");
-                        matriz2.establecer(i, j, scanner.nextInt());
-                    }
-                }
-                
-            } else if (opcion == 2) {
-            
-            	// Leer del archivo
-                ArrayList<Integer> numeros = new ArrayList<Integer>();
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader("numeros"));
-                    String linea;
-                    while ((linea = br.readLine()) != null) {
-                        String[] valores = linea.split(" ");
-                        for (String valor : valores) {
-                            if (!valor.isEmpty()) {
-                                numeros.add(Integer.parseInt(valor));
-                            }
+            while (true) {
+                // Menu para elegir como introducir los valores
+                System.out.println();
+                System.out.println("Como deseas introducir los valores?");
+                System.out.println("1. Por consola");
+                System.out.println("2. Por archivo");
+                System.out.print("Opcion: ");
+                int opcion = scanner.nextInt();
+
+                if (opcion == 1) {
+                    System.out.println("\n--- Matriz 1 ---");
+                    for (int i = 0; i < altura1; i++) {
+                        for (int j = 0; j < ancho1; j++) {
+                            System.out.print("[" + i + "][" + j + "]: ");
+                            matriz1.establecer(i, j, scanner.nextInt());
                         }
                     }
-                    br.close();
-                } catch (IOException e) {
-                    System.out.println("Error: no se pudo leer el archivo");
-                    return;
-                }
-                
-                // Validar que hay suficientes numeros
-                int totalNecesario = (ancho1 * altura1) + (ancho2 * altura2);
-                if (numeros.size() < totalNecesario) {
-                    System.out.println("Error: no hay suficientes valores en el archivo de numeros");
-                    return;
-                }
-                
-                // Llenar matrices desde archivo
-                int indice = 0;
-                for (int i = 0; i < altura1; i++) {
-                    for (int j = 0; j < ancho1; j++) {
-                        matriz1.establecer(i, j, numeros.get(indice));
-                        indice++;
-                    }
-                }
-                
-                for (int i = 0; i < altura2; i++) {
-                    for (int j = 0; j < ancho2; j++) {
-                        matriz2.establecer(i, j, numeros.get(indice));
-                        indice++;
-                    }
-                }
-            }
-            
-            else {
-                System.out.println("Opcion invalida");
-                return;
-            }
-            
-            // Mostrar matrices
-            System.out.println("\nMatriz 1:");
-            matriz1.mostrar();
-            System.out.println("\nMatriz 2:");
-            matriz2.mostrar();
-            
-            // Multiplicar matrices
-            System.out.println("\nCalculando multiplicacion...");
-            Matriz resultado = MultiplicadorMatrices.multiplicar(matriz1, matriz2);
-            
-            System.out.println("Resultado:");
-            resultado.mostrar();
 
-            // Opcion simple para guardar resultado
-            System.out.println();
-            System.out.println("Deseas guardar el resultado en un archivo? (1=si 2=no)");
-            int guardar = scanner.nextInt();
-            scanner.nextLine();
-            if (guardar == 1) {
-                System.out.print("Nombre de archivo a crear: ");
-                String nombre = scanner.nextLine();
-                try {
-                    GuardadorArchivo.guardar(resultado, nombre);
-                    System.out.println("Resultado guardado en: " + nombre);
-                } catch (IOException e) {
-                    System.out.println("Error: no se pudo guardar el archivo");
+                    System.out.println("\n--- Matriz 2 ---");
+                    for (int i = 0; i < altura2; i++) {
+                        for (int j = 0; j < ancho2; j++) {
+                            System.out.print("[" + i + "][" + j + "]: ");
+                            matriz2.establecer(i, j, scanner.nextInt());
+                        }
+                    }
+
+                } else if (opcion == 2) {
+                    // Leer del archivo
+                    ArrayList<Integer> numeros = new ArrayList<Integer>();
+                    try {
+                        BufferedReader br = new BufferedReader(new FileReader("numeros"));
+                        String linea;
+                        while ((linea = br.readLine()) != null) {
+                            String[] valores = linea.split(" ");
+                            for (String valor : valores) {
+                                if (!valor.isEmpty()) {
+                                    numeros.add(Integer.parseInt(valor));
+                                }
+                            }
+                        }
+                        br.close();
+                    } catch (IOException e) {
+                        System.out.println("Error: no se pudo leer el archivo");
+                        return;
+                    }
+
+                    // Validar que hay suficientes numeros
+                    int totalNecesario = (ancho1 * altura1) + (ancho2 * altura2);
+                    if (numeros.size() < totalNecesario) {
+                        System.out.println("Error: no hay suficientes valores en el archivo de numeros");
+                        return;
+                    }
+
+                    // Llenar matrices desde archivo
+                    int indice = 0;
+                    for (int i = 0; i < altura1; i++) {
+                        for (int j = 0; j < ancho1; j++) {
+                            matriz1.establecer(i, j, numeros.get(indice));
+                            indice++;
+                        }
+                    }
+
+                    for (int i = 0; i < altura2; i++) {
+                        for (int j = 0; j < ancho2; j++) {
+                            matriz2.establecer(i, j, numeros.get(indice));
+                            indice++;
+                        }
+                    }
+                } else {
+                    System.out.println("Opcion invalida");
+                    return;
                 }
+
+                // Mostrar matrices
+                System.out.println("\nMatriz 1:");
+                matriz1.mostrar();
+                System.out.println("\nMatriz 2:");
+                matriz2.mostrar();
+
+                // Multiplicar matrices
+                System.out.println("\nCalculando multiplicacion...");
+                Matriz resultado = MultiplicadorMatrices.multiplicar(matriz1, matriz2);
+
+                System.out.println("Resultado:");
+                resultado.mostrar();
+
+                //guardar resultado en archivo
+                System.out.println();
+                System.out.println("Deseas guardar el resultado en un archivo? (1=si 2=no)");
+                int guardar = scanner.nextInt();
+                scanner.nextLine();
+                if (guardar == 1) {
+                    System.out.print("Nombre de archivo a crear: ");
+                    String nombre = scanner.nextLine();
+                    try {
+                        GuardadorArchivo.guardar(resultado, nombre);
+                        System.out.println("Resultado guardado en: " + nombre);
+                    } catch (IOException e) {
+                        System.out.println("Error: no se pudo guardar el archivo");
+                    }
+                }
+
+                // Preguntar si repetir
+                System.out.println();
+                System.out.println("Quieres hacer otra multiplicacion con los mismos tamaños? (1=si 2=no)");
+                int otra = scanner.nextInt();
+                if (otra != 1) {
+                    break; // salir del bucle while
+                }
+                
             }
             
         } catch (NumberFormatException e) {
